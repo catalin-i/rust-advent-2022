@@ -1,5 +1,4 @@
 use crate::day2::RPS::{Paper, Rock, Scissors};
-use crate::utils::read_file_string;
 
 #[derive(PartialEq, Eq, Copy, Clone)]
 pub enum RPS {
@@ -9,23 +8,23 @@ pub enum RPS {
 }
 
 pub fn part1() {
-    let input = read_file_string("input/day2.txt").unwrap();
+    let input = include_str!("../input/day2.txt");
 
     let lines = input.lines();
     let mut total = 0_u32;
 
     for line in lines {
         let opponent_pick = match line.chars().nth(0).unwrap() {
-            'A' => RPS::Rock,
-            'B' => RPS::Paper,
-            'C' => RPS::Scissors,
+            'A' => Rock,
+            'B' => Paper,
+            'C' => Scissors,
             _ => Rock
         };
 
         let pick = match line.chars().nth(2).unwrap() {
-            'X' => RPS::Rock,
-            'Y' => RPS::Paper,
-            'Z' => RPS::Scissors,
+            'X' => Rock,
+            'Y' => Paper,
+            'Z' => Scissors,
             _ => Rock
         };
         let score = calc_score(pick, opponent_pick);
@@ -36,16 +35,16 @@ pub fn part1() {
 }
 
 pub fn part2() {
-    let input = read_file_string("input/day2.txt").unwrap();
+    let input = include_str!("../input/day2.txt");
 
     let lines = input.lines();
     let mut total = 0_u32;
 
     for line in lines {
         let opponent_pick = match line.chars().nth(0).unwrap() {
-            'A' => RPS::Rock,
-            'B' => RPS::Paper,
-            'C' => RPS::Scissors,
+            'A' => Rock,
+            'B' => Paper,
+            'C' => Scissors,
             _ => Rock
         };
 
@@ -75,10 +74,10 @@ fn calc_score(your: RPS, opponent: RPS) -> u32 {
         return base + 3;
     }
 
-    if opponent == get_weakness(&your) {
-        return base;
+    return if opponent == get_weakness(&your) {
+        base
     } else {
-        return base + 6;
+        base + 6
     }
 
 }
