@@ -1,27 +1,21 @@
 
 
 
-    pub fn _day1_p1() {
+    pub fn p1() {
         let input = include_str!("../input/day1.txt");
-        let mut max = 0;
 
-        let elfs: Vec<&str> = input.split("\n\n").collect();
-        for elf in elfs {
-            let mut sum = 0_u32;
-            let calory_strings: Vec<&str> = elf.split("\n").collect();
+        let  lines = input
+            .lines()
+            .map(|line| line.parse::<u64>().ok())
+            .collect::<Vec<_>>();
 
-            for cs in calory_strings {
-                let value = cs.trim().parse::<u32>().unwrap();
-                sum += value;
-            }
-            if sum > max {
-                max = sum;
-            }
-        }
-        println!("Max is: {}", max);
+        let max = lines.split(|line| line.is_none())
+            .map(|group| group.into_iter().map(|value| value.unwrap()).sum::<u64>())
+            .max().expect("No max found");
+        println!("Max is {}", max);
     }
 
-    pub fn day1_p2() {
+    pub fn p2() {
         let input = include_str!("../input/day1.txt");
         let mut calory_totals: Vec<u32> = vec![];
 

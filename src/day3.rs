@@ -1,4 +1,5 @@
 use std::collections::{HashMap, HashSet};
+use itertools::Itertools;
 
 fn get_priority(c: &char) -> u32 {
     let adjustment: u32 = if c.is_ascii_lowercase() {
@@ -44,30 +45,21 @@ pub fn part1() {
 
 }
 
-// pub fn part2() {
-//     let input = include_str!("..input/day3.txt");
-//
-//     let lines = input.lines();
-//     let mut sum:u32 = 0;
-//
-//     for (index, line) in lines.enumerate() {
-//
-//     }
-//
-//     while lines.peekable().peek().is_some() {
-//         let strings: Vec<&str> = lines.take(3).collect();
-//         let set1 = strings[0].chars().collect();
-//         let set2 = strings[1].chars().collect();
-//         let set3 = strings[2].chars().collect();
-//         let inter1: HashSet<char> = intersect(set1, &set2).iter()
-//             .map(|e| *e)
-//             .collect();
-//         let result = intersect(inter1, &set3);
-//
-//         let res_char = result.get(0).unwrap();
-//         sum += get_priority(res_char);
-//     }
-//
-//     println!("sum is: {}", sum);
-//
-// }
+pub fn part2() {
+    let input = include_str!("../input/day3.txt");
+
+    let lines = input.lines();
+
+    let sum: u32 = lines
+        .map(|line| { line.chars().collect::<HashSet<char>>() })
+        .tuples()
+        .map(|(a, b, c)| {
+            let res: HashSet<char> = intersect(a, &b).into_iter().collect();
+            let final_res = intersect(res, &c);
+            return get_priority(&final_res.get(0).unwrap());
+        })
+        .sum();
+
+
+    println!("sum is: {}", sum);
+}
