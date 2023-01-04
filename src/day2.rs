@@ -4,7 +4,7 @@ use crate::day2::RPS::{Paper, Rock, Scissors};
 pub enum RPS {
     Rock = 1,
     Paper = 2,
-    Scissors = 3
+    Scissors = 3,
 }
 
 pub fn part1() {
@@ -18,18 +18,17 @@ pub fn part1() {
             'A' => Rock,
             'B' => Paper,
             'C' => Scissors,
-            _ => Rock
+            _ => Rock,
         };
 
         let pick = match line.chars().nth(2).unwrap() {
             'X' => Rock,
             'Y' => Paper,
             'Z' => Scissors,
-            _ => Rock
+            _ => Rock,
         };
         let score = calc_score(pick, opponent_pick);
         total += score;
-
     }
     println!("{}", total);
 }
@@ -45,17 +44,15 @@ pub fn part2() {
             'A' => Rock,
             'B' => Paper,
             'C' => Scissors,
-            _ => Rock
+            _ => Rock,
         };
 
         let pick = calculate_pick(line.chars().nth(2).unwrap(), opponent_pick);
 
         let score = calc_score(pick, opponent_pick);
         total += score;
-
     }
     println!("{}", total);
-
 }
 
 fn calculate_pick(result: char, opponnent_pick: RPS) -> RPS {
@@ -63,12 +60,12 @@ fn calculate_pick(result: char, opponnent_pick: RPS) -> RPS {
         'Z' => get_weakness(&opponnent_pick),
         'Y' => opponnent_pick,
         'X' => get_weakness(&get_weakness(&opponnent_pick)),
-        _ => opponnent_pick
+        _ => opponnent_pick,
     }
 }
 
 fn calc_score(your: RPS, opponent: RPS) -> u32 {
-    let base =  your as u32;
+    let base = your as u32;
     println!("Base is: {}", base);
     if your == opponent {
         return base + 3;
@@ -78,14 +75,13 @@ fn calc_score(your: RPS, opponent: RPS) -> u32 {
         base
     } else {
         base + 6
-    }
-
+    };
 }
 
 fn get_weakness(pick: &RPS) -> RPS {
     match pick {
         Rock => Paper,
         Paper => Scissors,
-        Scissors => Rock
+        Scissors => Rock,
     }
 }

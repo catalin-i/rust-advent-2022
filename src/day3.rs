@@ -1,12 +1,8 @@
-use std::collections::{HashMap, HashSet};
 use itertools::Itertools;
+use std::collections::{HashMap, HashSet};
 
 fn get_priority(c: &char) -> u32 {
-    let adjustment: u32 = if c.is_ascii_lowercase() {
-      96
-    } else {
-        38
-    };
+    let adjustment: u32 = if c.is_ascii_lowercase() { 96 } else { 38 };
 
     *c as u32 - adjustment
 }
@@ -24,16 +20,14 @@ pub fn find_duplicates(left: &str, right: &str) -> Vec<char> {
 }
 
 fn intersect(left_chars: HashSet<char>, right_chars: &HashSet<char>) -> Vec<char> {
-    left_chars.intersection(&right_chars)
-        .map(|i| *i)
-        .collect()
+    left_chars.intersection(&right_chars).map(|i| *i).collect()
 }
 
 pub fn part1() {
     let input = include_str!("../input/day3.txt");
 
     let lines = input.lines();
-    let mut sum:u32 = 0;
+    let mut sum: u32 = 0;
 
     for line in lines {
         let (left, right) = split_backpack(line);
@@ -42,7 +36,6 @@ pub fn part1() {
     }
 
     println!("sum is: {}", sum);
-
 }
 
 pub fn part2() {
@@ -51,7 +44,7 @@ pub fn part2() {
     let lines = input.lines();
 
     let sum: u32 = lines
-        .map(|line| { line.chars().collect::<HashSet<char>>() })
+        .map(|line| line.chars().collect::<HashSet<char>>())
         .tuples()
         .map(|(a, b, c)| {
             let res: HashSet<char> = intersect(a, &b).into_iter().collect();
@@ -59,7 +52,6 @@ pub fn part2() {
             return get_priority(&final_res.get(0).unwrap());
         })
         .sum();
-
 
     println!("sum is: {}", sum);
 }
